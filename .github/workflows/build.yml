@@ -1,0 +1,55 @@
+name: Build + Release Mod
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull source
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: 17
+
+      - name: Gradle build
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: release-candidate
+          arguments: build
+
+      - name: Rename file
+        run: mv ./build/libs/NoBlindness-1.0.jar ./build/libs/NoBlindness-1.20.2.jar
+
+      - name: Update
+        run: |
+          echo 'ext {' > properties.gradle
+          echo '    mc_version = '\''1.19.4'\'' ' >> properties.gradle
+          echo '    loader_version = '\''0.14.23'\'' ' >> properties.gradle
+          echo '    yarn_mappings = '\''1.19.4+build.2'\'' ' >> properties.gradle
+          echo '    fabric_version = '\''0.87.1+1.19.4'\'' ' >> properties.gradle
+          echo '}' >> properties.gradle
+
+      - name: Gradle build
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: release-candidate
+          arguments: build
+
+      - name: Rename file
+        run: mv ./build/libs/NoBlindness-1.0.jar ./build/libs/NoBlindness-1.19.4.jar
+
+      - name: Create Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: false
+          title: Build
+          files: |
+            LICENSE.txt
+            ./build/libs/NoBlindness-1.20.2.jar
+            ./build/libs/NoBlindness-1.19.4.jar

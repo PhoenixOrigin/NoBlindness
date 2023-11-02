@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "noblindness",
+  "version": "${version}",
+  "name": "NoBlindness",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/PhoenixOrigin/NoBlindness"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/noblindness/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.phoenix.noblindness.NoBlindness"
+    ],
+    "main": [
+      "net.phoenix.noblindness.NoBlindness"
+    ]
+  },
+  "mixins": [
+    "noblindness.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
