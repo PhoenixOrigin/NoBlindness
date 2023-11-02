@@ -14,9 +14,6 @@
   "entrypoints": {
     "client": [
       "net.phoenix.noblindness.NoBlindness"
-    ],
-    "main": [
-      "net.phoenix.noblindness.NoBlindness"
     ]
   },
   "mixins": [
